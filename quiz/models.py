@@ -78,7 +78,7 @@ class StudentInfo(models.Model):
     student_name = models.TextField(max_length=225)
     std_prn = models.IntegerField()
     std_sec = models.CharField(max_length=225)
-    std_roll = models.CharField(default=0)
+    std_roll = models.CharField(max_length=255,default=0)
     no_subject = models.IntegerField(default=0)
     std_created_at = models.DateTimeField(auto_now_add=True)
     std_updated_at = models.DateTimeField(auto_now=True)
