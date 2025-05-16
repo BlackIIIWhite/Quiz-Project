@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quiz Time - Test your knowledge with our interactive quiz platform">
+    <title>Quiz Time - Test Your Knowledge</title>
+    <link rel="stylesheet" href="{% static 'css/test_info.css' %}">
+</head>
+<body>
+    <div id="screenshot-overlay"></div>
+    <header>
+        <nav>
+            <div class="name">
+                <div class="img">
+                    <img src="{% static 'source/hugeicons_quiz-01.png' %}" alt="Quiz Time Logo">
+                </div>
+                <div class="username">
+                    <h4>User Name</h4>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="quiz-container">
+            <section class="quiz-middle">
+                {% if messages %}
+                    {% for message in messages %}
+                            <p style="color:red;">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h1>Enter The Code For Test</h1>
+                        <br>
+                        <br>
+                        <div class="quiz-option">
+                            <label for="test_code">Test Code</label>
+                            <input type="text" name="test_code" id="test_code" class="test_info" placeholder="Enter The Test Code" required>
+                            {% comment %} <img src="{% static 'source/copy.png' %}" alt="Copy" class="copy_icon" onclick="copy_test_code()"> {% endcomment %}
+                        </div>
+                        <div class="quiz-controls">
+                            <div class="btn-next">
+                                <button type="submit" class="submit-btn">Submit</button>
+                            </div>
+                            <div class="btn-next">
+                    </div>
+                    <br>
+                           {% comment %} <a href="{% url 'dashboard_st' %}"><button type="submit" class="submit-btn">Cancel</button></a>
+                         {% endcomment %}
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+    <script>
+        function copy_test_code(){
+            var test_code = document.getElementById('test_code').value;
+            navigator.clipboard.writeText(test_code);
+        }
+    </script>
+</body>
+</html>

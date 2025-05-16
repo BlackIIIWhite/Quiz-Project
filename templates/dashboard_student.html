@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard_student.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <main>
+        <nav>
+            <div class="nav-content">
+                <div class="username">
+                    <div class="img">
+                        <img src="{% static 'source/admin-users.png' %}" alt="Quiz Time Logo">
+                    </div>
+                    <div class="name">
+                        <h4>{{ student.username }}</h4>
+                    </div>
+                </div>
+                <div class="home">
+                    <div class="img">
+                        <img src="{% static 'source/home.png' %}" alt="Quiz Time Logo">
+                    </div>
+                    <div class="name">
+                        <a href="#"><h4>Home</h4></a>
+                    </div>
+                </div>
+                <div class="dashboard">
+                    <div class="img">
+                        <img src="{% static 'source/dashboard-rounded.png' %}" alt="Quiz Time Logo">
+                    </div>
+                    <div class="name">
+                        <a href="#"><h4>Dashboard</h4></a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-content-right">
+                <div class="img">
+                    <img src="{% static 'source/logout.png' %}" alt="Quiz Time Logo">
+                </div>
+                <div class="name">
+                    <a href="#"><h4>Logout</h4></a>
+                </div>
+            </div>
+        </nav>
+        <section>
+            <div class="section-content">
+                <div class="section-content-left">
+                    <h4>Dashboard</h4>
+                </div>
+                <div class="section-name">
+                    <div class="sub-section-name">
+                       {% comment %} <div class="student-total">
+                            <div class="info">
+                               <div class ="total-text">
+                                    <h4>CN</h4>
+                               </div>
+                            </div>
+                            <div class="info-icon"></div>
+                       </div> {% endcomment %}
+                       {% for subject in name_subject  %}
+                       <div class="section-1">
+                           <div class="info">
+                               <div class="info-text">
+                                   <h4>{{ subject }}</h4>
+                               </div>
+                           </div>
+                           <div class="info-icon"></div>
+                       </div>
+                        {% endfor %}                   
+                       {% comment %} <div class="section-2">
+                            <div class="info">
+                                <div class="info-text">
+                                    <h4>CD</h4>
+                                </div>
+                            </div>
+                            <div class="info-icon"></div>
+                       </div>  {% endcomment %}
+                    </div> 
+                </div>
+                <div class="section-content-right">
+                    <div class="chart-container">
+                        <canvas id="marksChart"></canvas>
+                    </div>
+                </div>
+                <div class="section-content-bottom">
+                    <div class="section-test-detail">
+                        <div class="detail-text">
+                            <a href="{% url 'join_test' %}"><h4>Join Test</h4></a>
+                        </div>
+                        <div class="detail-icon">
+                            <img src="{% static 'source/detail.png' %}" alt="Quiz Time Logo">
+                        </div>
+                    </div>
+                    <div class="section-test-result">
+                        <div class="result-text">
+                            <a href="{% url 'result_student' %}"><h4>Test Result</h4></a>
+                        </div>
+                        <div class="result-icon">
+                            <img src="{% static 'source/result.png' %}" alt="Quiz Time Logo">
+                        </div>
+                    </div>
+                    <div class="section-create">
+                        <div class="info-create">
+                            <div class="info-text">
+                                <a href="{% url 'join_class' %}"<h4>Join Class</h4></a>
+                            </div>
+                        </div>
+                        <div class="create-icon">
+                            <img src="{% static 'source/create.png' %}" alt="Quiz Time Logo">
+                        </div>
+                   </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+        // Create the chart
+        const ctx = document.getElementById('marksChart').getContext('2d');
+
+        // Subject data
+        const subjects = ['CN', 'ML', 'CD'];
+
+        // Marks for a single student
+        const studentMarks = [15, 18, 12];
+
+        // Create gradients for each subject
+        const gradients = {
+            CN: ctx.createLinearGradient(0, 0, 0, 400),
+            ML: ctx.createLinearGradient(0, 0, 0, 400),
+            CD: ctx.createLinearGradient(0, 0, 0, 400)
+        };
+
+        // Set gradient colors
+        gradients.CN.addColorStop(0, 'rgba(19, 6, 153, 0.2)');
+        gradients.CN.addColorStop(1, 'rgba(19, 6, 153, 0.8)');
+
+        gradients.ML.addColorStop(0, 'rgba(242, 82, 85, 0.2)');
+        gradients.ML.addColorStop(1, 'rgba(242, 82, 85, 0.8)');
+
+        gradients.CD.addColorStop(0, 'rgba(81, 234, 127, 0.2)');
+        gradients.CD.addColorStop(1, 'rgba(81, 234, 127, 0.8)');
+
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: subjects,
+                datasets: [
+                    {
+                        label: 'My Marks',
+                        data: studentMarks,
+                        backgroundColor: [
+                            gradients.CN,
+                            gradients.ML,
+                            gradients.CD
+                        ],
+                        borderColor: [
+                            'rgba(19, 6, 153, 1)',
+                            'rgba(242, 82, 85, 1)',
+                            'rgba(81, 234, 127, 1)'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 5,
+                        barPercentage: 0.5
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 20,
+                        title: {
+                            display: true,
+                            text: 'Marks Obtained',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Subjects',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'My Subject-wise Performance',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        },
+                        padding: {
+                            top: 10,
+                            bottom: 20
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            padding: 20,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: ${context.raw} marks`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

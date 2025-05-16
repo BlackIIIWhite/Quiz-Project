@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quiz Time - Test your knowledge with our interactive quiz platform">
+    <title>Quiz Time - Test Your Knowledge</title>
+    <link rel="stylesheet" href="{% static 'css/quiz_de.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="name">
+                <div class="img">
+                    <img src="{% static 'source/hugeicons_quiz-01.png' %}" alt="Quiz Time Logo">
+                </div>
+                <div class="username">
+                    <h4>User Name</h4>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="quiz-container">
+            <section class="quiz-middle">
+                <section class="quiz-left-top">
+                    <div class="quiz-left-top-timer">
+                        <h2>Timer</h2>
+                    </div>
+                    <div class="quiz-left-top-time">
+                        <h2>00:00</h2>
+                    </div>
+                </section>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="quiz-question">
+                        <input type="text" name="question_no" id="question_no" value="1. What is the output of the following C code?">
+                        <textarea id="question" name="question" rows="4" cols="50">#include <stdio.h>
+int main() {
+    int a = 5, b = 2;
+    printf("%d", a / b);
+    return 0;
+}</textarea>
+                    </div>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="answer" value="2.5" required>
+                            <h2>2.5</h2>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="answer" value="2" required>
+                            <h2>2</h2>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="answer" value="2.0" required>
+                            <h2>2.0</h2>
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="answer" value="Error" required>
+                            <h2>Error</h2>
+                        </label>
+                    </div>
+                    <section class="response-chart">
+                        <h2>Response Distribution</h2>
+                        <canvas id="responseChart"></canvas>
+                    </section>
+                    <div class="quiz-controls">
+                        <div class="btn-next">
+                            <button type="submit" class="submit-btn">Next Question</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Initialize the pie chart
+        const ctx = document.getElementById('responseChart').getContext('2d');
+        const responseChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['2.5', '2', '2.0', 'Error'],
+                datasets: [{
+                    data: [30, 25, 20, 25],
+                    backgroundColor: [
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56',
+                        '#4BC0C0'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#333',
+                            font: {
+                                size: 12
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Response Distribution',
+                        color: '#333',
+                        font: {
+                            size: 16
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard_st.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <nav>
+            <div class="nav-content">
+                <div class="username">
+                    <div class="img">
+                        <img src="{% static 'source/admin-users.png' %}" alt="Quiz Time Logo">
+                    </div>
+                    <div class="name">
+                        <h4>{{ teacher.username }}</h4>
+                    </div>
+                </div>
+                <div class="home">
+                    <div class="img">
+                        <img src="{% static 'source/home.png' %}" alt="Quiz Time Logo">
+                    </div>
+                    <div class="name">
+                        <a href="#"><h4>Home</h4></a>
+                    </div>
+                </div>
+                <div class="dashboard">
+                    <div class="img">
+                        <img src="{% static 'source/dashboard-rounded.png' %}" alt="Quiz Time Logo">
+                    </div>
+                    <div class="name">
+                        <a href="#"><h4>Dashboard</h4></a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-content-right">
+                <div class="img">
+                    <a href="{% url 'logout_teach' %}"><img src="{% static 'source/logout.png' %}" alt="Quiz Time Logo"></a>
+                </div>
+                <div class="name">
+                    <a href="{% url 'logout_teach' %}"><h4>Logout</h4></a>
+                </div>
+            </div>
+        </nav>
+        <section>
+            <div class="section-content">
+                <div class="section-content-left">
+                    <h4>Dashboard</h4>
+                </div>
+                <div class="section-name">
+                    <div class="sub-section-name">
+                       {% comment %} <div class="student-total">
+                            <div class="info">
+                               <div class ="total-text">
+                                    <h4>Student Total</h4>
+                               </div>
+                               <div class="total-number">
+                                    <h4>137</h4>
+                               </div>
+                            </div>
+                            <div class="info-icon">
+                                <img src="{% static 'source/total.png' %}" alt="Quiz Time Logo">
+                            </div>
+                       </div> {% endcomment %}
+                       {% for section in sections %}
+                       <div class="section-1">
+                           <div class="info">
+                               <div class="info-text">
+                                   <h4>Student in {{ section.section }}</h4>
+                               </div>
+                               <div class="info-number">
+                                   <h4>69</h4> 
+                               </div>
+                           </div>
+                           <div class="info-icon">
+                           </div>
+                       </div>
+                   {% endfor %}
+                    </div> 
+                </div>
+                <div class="section-content-right">
+                    <div class="chart-container">
+                        <canvas id="marksChart"></canvas>
+                    </div>
+                </div>
+                <div class="section-content-bottom">
+                    <div class="section-test-detail">
+                        <div class="detail-text">
+                            <a href="{% url 'quiz' %}"<h4>Test Detail</h4></a>
+                        </div>
+                        <div class="detail-icon">
+                            <img src="{% static 'source/detail.png' %}" alt="Quiz Time Logo">
+                        </div>
+                    </div>
+                    <div class="section-test-result">
+                        <div class="result-text">
+                            <a href="{% url 'result' %}"><h4>Test Result</h4></a>
+                        </div>
+                        <div class="result-icon">
+                            <img src="{% static 'source/result.png' %}" alt="Quiz Time Logo">
+                        </div>
+                    </div>
+                    <div class="section-create">
+                        <div class="info">
+                            <div class="info-text">
+                                <a href="{% url 'create_class' %}"<h4>Create Class</h4></a>
+                            </div>
+                        </div>
+                        <div class="create-icon">
+                            <img src="{% static 'source/create.png' %}" alt="Quiz Time Logo">
+                        </div>
+                   </div>
+                   <div class="section-create">
+                    <div class="info">
+                        <div class="info-text">
+                            <a href="{% url 'upload' %}"><h4>Create Test</h4></a>
+                        </div>
+                    </div>
+                    <div class="create-icon">
+                        <img src="{% static 'source/create.png' %}" alt="Quiz Time Logo">
+                    </div>
+               </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('marksChart').getContext('2d');
+    
+            const studentCount = 20;
+            const studentLabels = Array.from({ length: studentCount }, (_, i) => `Student ${i + 1}`);
+    
+            const classAMarks = Array.from({ length: studentCount }, () => Math.floor(Math.random() * 21));
+            const classBMarks = Array.from({ length: studentCount }, () => Math.floor(Math.random() * 21));
+    
+            const gradientA = ctx.createLinearGradient(0, 0, 0, 400);
+            gradientA.addColorStop(0, '#FFFFFF');
+            gradientA.addColorStop(1, '#8490FD');
+    
+            const gradientB = ctx.createLinearGradient(0, 0, 0, 400);
+            gradientB.addColorStop(0, '#FFFFFF');
+            gradientB.addColorStop(1, '#84FD92');
+    
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: studentLabels,
+                    datasets: [
+                        {
+                            label: 'Student in A',
+                            data: classAMarks,
+                            borderColor: '#069918',
+                            backgroundColor: gradientA,
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Student in B',
+                            data: classBMarks,
+                            borderColor: '#8427fd',
+                            backgroundColor: gradientB,
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 20,
+                            title: {
+                                display: true,
+                                text: 'Marks Obtained'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Students'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Student Performance Comparison',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+    
+            // ---- Gradient Section Styling ----
+            function getRandomColor() {
+                const letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+    
+            function applyRandomGradients() {
+                const sections = document.querySelectorAll('.section-1');
+                sections.forEach(section => {
+                    const color1 = getRandomColor();
+                    const color2 = getRandomColor();
+                    section.style.background = `linear-gradient(90deg, ${color1} 20%, ${color2} 100%)`;
+    
+                    section.addEventListener('click', () => {
+                        const newColor1 = getRandomColor();
+                        const newColor2 = getRandomColor();
+                        section.style.background = `linear-gradient(90deg, ${newColor1} 20%, ${newColor2} 100%)`;
+                    });
+                });
+            }
+    
+            applyRandomGradients(); // Call this once DOM is loaded
+        });
+    </script>
+    
+</body>
+</html>
+
+
+
+

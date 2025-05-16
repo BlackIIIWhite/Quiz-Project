@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quiz Time - Test your knowledge with our interactive quiz platform">
+    <title>Quiz Time - Test Your Knowledge</title>
+    <link rel="stylesheet" href="{% static 'css/test_info.css' %}">
+</head>
+<body>
+    <div id="screenshot-overlay"></div>
+    <header>
+        <nav>
+            <div class="name">
+                <div class="img">
+                    <img src="{% static 'source/hugeicons_quiz-01.png' %}" alt="Quiz Time Logo">
+                </div>
+                <div class="username">
+                    <h4>User Name</h4>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="quiz-container">
+            <section class="quiz-middle">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h1>Class Information</h1>
+                    <div class="quiz-question">
+                        <input type="text" name="NofS" id="test_name" class="test_info" placeholder="Name of the Subject" required>
+                        <input type="text" name="NofT" id="test_name" class="test_info" placeholder="Name of teacher" required>
+                        <label class="quiz-option">
+                        <label for="Test_id" style="font-size: 20px; font-weight: bold; color: #333;"><h4>Subject Name in Shortcut</h4></label>
+                        <input type="text" name="SniS" id="NofQ" class="test_info" placeholder="ex : ML...." required>
+                        </label>
+                        <br>
+                        <br>
+                        <label class="quiz-option">
+                        <label for="Test_time" style="font-size: 20px; font-weight: bold; color: #333;"><h4>For which Section</h4></label>
+                        <input type="text" name="FwS" id="test_time" class="test_info" placeholder="ex : A or B or ....." required>
+                        </label>
+                        <br>
+                        <br>
+                        <label class="quiz-option">
+                        <label for="Test_time" style="font-size: 20px; font-weight: bold; color: #333;"><h4>Class Code</h4></label>
+                        <input type="text" name="Class_code" id="test_code" class="test_info" value="{{class_code}}" readonly required>
+                        <img src="{% static 'source/copy.png' %}" alt="Copy" class="copy_icon"onclick="copy_test_code()">
+                        </label>
+                    </div>
+                    <br>
+                    <div class="quiz-controls">
+                        <div class="btn-next">
+                            <button type="submit" class="submit-btn">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+    <script>
+        function copy_test_code(){
+            var test_code = document.getElementById('test_code').value;
+            navigator.clipboard.writeText(test_code);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+}
+
+nav {
+    background-color: #000;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px 5px 0px 5px;
+}
+
+.nav-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.username,
+.home,
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: rgb(125, 125, 125);
+    gap: 3px;
+}
+a{
+    text-decoration: none;
+    color: rgb(125, 125, 125);
+}
+.username img,
+.home img,
+.dashboard img {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+.nav-content-right{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    color: rgb(164, 163, 163);
+    gap: 5px;
+}
+
+/* Existing styles kept above */
+
+.student_rank {
+    padding: 20px;
+    text-align: center;
+    background-color: #f5f7fa;
+}
+
+.student_rank h1 {
+    color: #2a2a2a;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+/* Table Styling */
+.rank-table {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.rank-table th, .rank-table td {
+    padding: 14px 18px;
+    text-align: center;
+}
+
+.rank-table th {
+    background-color: #2a5298;
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.rank-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.rank-table tr:hover {
+    background-color: #e6f0ff;
+}
+
+.rank-table td {
+    font-size: 15px;
+    color: #333;
+}
+
+
+/* Responsive Table Styles */
+.rank-table {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.rank-table th, .rank-table td {
+    padding: 14px 18px;
+    text-align: center;
+}
+
+.rank-table th {
+    background-color: #2a5298;
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.rank-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.rank-table tr:hover {
+    background-color: #e6f0ff;
+}
+
+.rank-table td {
+    font-size: 15px;
+    color: #333;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .rank-table {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .rank-table th, .rank-table td {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .student_rank h1 {
+        font-size: 22px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .rank-table {
+        width: 100%;
+        font-size: 10px;
+    }
+
+    .rank-table th, .rank-table td {
+        padding: 6px 8px;
+        font-size: 10px;
+    }
+
+    .student_rank h1 {
+        font-size: 18px;
+    }
+}

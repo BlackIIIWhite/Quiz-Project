@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quiz Time - Test your knowledge with our interactive quiz platform">
+    <title>Quiz Time - Test Your Knowledge</title>
+    <link rel="stylesheet" href="{% static 'css/signup_teach.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="info-section">
+            <h1>Create<br>New<br>Quiz</h1>
+        </div>
+        <div class="signup-section">
+            <h2>Signup</h2>
+             <div class ="btn_2_1">
+                <a href="{% url 'login' %}"><button type="button" class="role-btn">Student</button></a>
+                <a href="{% url 'login_teach' %}"><button type="button" class="role-btn" style ="background-color: #000000;">Teacher</button></a>
+            </div>
+            <form action="{% url 'signup_teach' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-username">Username</label>
+                    <input type="text" id="signup-username" name="username" placeholder="Enter a Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="form-group">
+                    <label for="teacher-id">Teacher Id</label>
+                    <input type="number" id="teacher-id" name="teacher_id" placeholder="Enter teacher id" required>
+                </div>
+                <button type="submit" class="submit-btn">Signup</button>
+                <p>Already have an account? <a href="{% url 'login_teach' %}">Login</a></p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

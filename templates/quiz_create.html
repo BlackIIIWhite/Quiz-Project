@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quiz Time - Test your knowledge with our interactive quiz platform">
+    <title>Quiz Time - Test Your Knowledge</title>
+    <link rel="stylesheet" href="{% static 'css/quiz_create.css' %}">
+</head>
+<body>
+    <div id="screenshot-overlay"></div>
+    <header>
+        <nav>
+            <div class="name">
+                <div class="img">
+                    <img src="{% static 'source/hugeicons_quiz-01.png' %}" alt="Quiz Time Logo">
+                </div>
+                <div class="username">
+                    <h4>User Name</h4>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="quiz-container">
+            <section class="quiz-middle">
+                <form action="{% url 'quiz_create' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="test_code" value="{{ test_code }}">
+                    {% for i in numbers %}
+                    <div class="quiz-question">
+                        <input type="text" name="question_no_{{ i }}" id="question_no_{{ i }}" value='{{ i }}'>
+                        <textarea id="question_{{ i }}" name="question_{{ i }}" rows="4" cols="50">#include <stdio.h>
+int main() {
+    int a = 5, b = 2;
+    printf("%d", a / b);
+    return 0;
+}</textarea>
+                    </div>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="text" name="answer-{{ i }}-1" required placeholder="example: 2.5">
+                        </label>
+                        <label class="quiz-option">
+                            <input type="text" name="answer-{{ i }}-2" required placeholder="example: 2">
+                        </label>
+                        <label class="quiz-option">
+                            <input type="text" name="answer-{{ i }}-3" required placeholder="example: 2.0">
+                        </label>
+                        <label class="quiz-option">
+                            <input type="text" name="answer-{{ i }}-4" required placeholder="example: Error">
+                        </label>
+                        <label class="quiz-option">
+                            <input type="text" name="answer-{{ i }}-5" required placeholder="Right Answer">
+                        </label>
+                    </div>
+                    <br>
+                    <br>
+                    {% endfor %}
+                    <div class="quiz-controls">
+                        <div class="btn-next">
+                            <button type="submit" class="submit-btn">Submit</button>
+                        </div>
+                        <div class="btn-next">
+                            <button type="button" class="submit-btn">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+</body>
+</html>

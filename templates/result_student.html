@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/result_student.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <main>
+        <nav>
+            <div class="nav-content">
+                <div class="username">
+                    <div class="img">
+                        <img src="{% static 'source/admin-users.png' %}" alt="Quiz Time Logo">
+                    </div>
+                    <div class="name">
+                        <h4>User Name</h4>
+                    </div>
+                </div>
+                <div class="home">
+                    <div class="img">
+                        <img src="{% static 'source/home.png' %}" alt="Quiz Time Logo">
+                    </div>
+                    <div class="name">
+                        <a href="#"><h4>Home</h4></a>
+                    </div>
+                </div>
+                <div class="dashboard">
+                    <div class="img">
+                        <img src="{% static 'source/dashboard-rounded.png' %}" alt="Quiz Time Logo">
+                    </div>
+                    <div class="name">
+                        <a href="#"><h4>Dashboard</h4></a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-content-right">
+                <div class="img">
+                    <img src="{% static 'source/logout.png' %}" alt="Quiz Time Logo">
+                </div>
+                <div class="name">
+                    <a href="#"><h4>Logout</h4></a>
+                </div>
+            </div>
+        </nav>
+        <div class="student_rank">
+            <h1>Student Rank</h1>
+            <div class="student_rank_content">
+                <table class="rank-table">
+                    <thead>
+                        <tr>
+                            <th>PRN</th>
+                            <th>Student Name</th>
+                            <th>Student Section</th>
+                            <th>Subject Name</th>
+                            <th>Marks</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    {% for result in results %}
+                    <tbody>
+                        <tr>
+                            <td>{{ result.PRN }}</td>
+                            <td>{{ result.std_name }}</td>
+                            <td>{{ result.std_section }}</td>
+                            <td>{{ result.subject_name }}</td>
+                            <td>{{ result.marks }}</td>
+                            <td>{{ result.test_created_at|date:"d M Y H:i" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6">No results found for this user.</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+
+
+
+
+

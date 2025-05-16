@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quiz Time - Test your knowledge with our interactive quiz platform">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <title>Quiz Time - Test Your Knowledge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        body, html {
+            height: 100%;
+            background-color: #000;
+        }
+
+        .container {
+            display: flex;
+            height: 90vh;
+            width: 90%;
+            max-width: 1000px;
+            margin: auto;
+            margin-top: 30px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        .login-section {
+            flex: 1;
+            background-color: white;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .role-btn {
+            background-color: #f0f0f0;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            color:rgb(0, 217, 255);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .submit-btn {
+            background-color: #333;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #000;
+        }
+
+        .login-section p {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .login-section a {
+            color: blue;
+            text-decoration: none;
+        }
+
+        .info-section {
+            flex: 1;
+            background-color: #02EEF6;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .btn_2_1{
+            display: flex;
+            flex-direction: row;
+            gap:20px;
+        }
+
+        .info-section h1 {
+            font-size: 3rem;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .info-section {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-section">
+            <h2>Login</h2>
+            <div class ="btn_2_1">
+                <a href="{% url 'login' %}"><button type="button" class="role-btn" style ="background-color: #000000;">Student</button></a>
+                <a href="{% url 'login_teach' %}"><button type="button" class="role-btn">Teacher</button></a>
+            </div>
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+                <p>Don't have an account? <a href="{% url 'signup' %}">Signup</a></p>
+            </form>
+        </div>
+        <div class="info-section">
+            <h1>Test<br>Your<br>Knowledge</h1>
+        </div>
+    </div>
+</body>
+</html>

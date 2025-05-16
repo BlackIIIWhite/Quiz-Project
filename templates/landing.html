@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quiz Time - Test your knowledge with our interactive quiz platform. Create, interact, and analyze your quiz results.">
+    <meta name="keywords" content="quiz, interactive quiz, knowledge test, online quiz, quiz platform">
+    <meta name="author" content="Quiz Time">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Quiz Time - Test Your Knowledge</title>
+</head>
+<body>
+    <div class="ball"></div>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Logo</h1>
+            </div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="#code">Code</a>
+                <a href="#about">About</a>
+            </div>
+            <div class="auth-buttons">
+                <a href="{% url 'login' %}" class="login">Log in</a>
+                <a href="{% url 'signup' %}" class="signup">Sign up</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>Quiz Time</h2>
+                    <h1>"How Much Do You Really Know?"</h1>
+                </div>
+                <div class="cta-button">
+                    <button>Get Started</button>
+                </div>
+                <div class="hero-image">
+                    <img src="{% static 'source/hero _img.jpg' %}" alt="Hero Image">
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="features-header">
+                <div class="section-title">
+                    <h3>How it works</h3>
+                </div>
+                <div class="section-description">
+                    <h2>Get Started In 3 Steps</h2>
+                    <p>Quiz Time helps you create, interact, and analyze - let's see how!</p>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <article class="feature-card">
+                    <h3>Create</h3>
+                    <div class="feature-image">
+                        <img src="{% static 'source/middle_1_img.png' %}" alt="Create">
+                    </div>
+                    <div class="feature-description">
+                        <p>Whatever you're looking to create, Quiz Time has the answer.</p>
+                    </div>
+                </article>
+
+                <article class="feature-card">
+                    <h3>Interact</h3>
+                    <div class="feature-image">
+                        <img src="{% static 'source/middle_2_img.webp' %}" alt="Interact">
+                    </div>
+                    <div class="feature-description">
+                        <p>When presenting your audience can easily join your quiz by entering your unique quiz code.</p>
+                    </div>
+                </article>
+
+                <article class="feature-card">
+                    <h3>Analyze</h3>
+                    <div class="feature-image">
+                        <img src="{% static 'source/middle_3_img.jpeg' %}" alt="Analyze">
+                    </div>
+                    <div class="feature-description">
+                        <p>Track how your audience reacted to your presentation, with slide-by-slide details after you present.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-cta">
+                <h2>Start adapting your curriculum in minutes.</h2>
+                <p>The best way to create, adapt, and deliver resources differentiated for every student.</p>
+                <button>Get Started Now</button>
+            </div>
+            
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/ScrollTrigger.min.js" integrity="sha512-AcqPGqrrAEtEwe+ADO5R8RbdFi7tuU7b/A2cJJH0Im0D18NRk5p5s4B3E5PMuO81KFw0ClN7J5SHVUJz7KOb0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js" integrity="sha512-f6bQMg6nkSRw/xfHw5BCbISe/dJjXrVGfz9BSDwhZtiErHwk7ifbmBEtF9vFW8UNIQPhV2uEFVyI/UHob9r7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quiz Time - Test your knowledge with our interactive quiz platform">
+    <title>Quiz Time - Test Your Knowledge</title>
+    <link rel="stylesheet" href="{% static 'css/quiz_style.css' %}">
+    <style>
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="screenshot-overlay"></div>
+    <header>
+        <nav>
+            <div class="name">
+                <div class="img">
+                    <img src="{% static 'source/hugeicons_quiz-01.png' %}" alt="Quiz Time Logo">
+                </div>
+                <div class="username">
+                    <h4>User Name</h4>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="quiz-container">
+            <section class="quiz-middle">
+                <section class="quiz-left-top">
+                    <div class="quiz-left-top-timer">
+                        <h2>Timer</h2>
+                    </div>
+                    <div class="quiz-left-top-time">
+                        <h2>{{ test_du }}</h2>
+                    </div>
+                </section>
+                <form action="{% url 'quiz_an' %}" method="post">
+                    {% csrf_token %}
+                    {% comment %} <p style="color: red;">Test ID: {{ test_id }}</p> {% endcomment %}
+                    <input type="hidden" name="test_id" value="{{ test_id }}">
+                    <input type ="hidden" name = 'code' value="{{code}}">
+                    {% for q in quiz_list %}
+                        <div class="quiz-question">
+                            <input type="text" name="question_no" value="{{ q.question_no }}" readonly>
+                            <input type = "hidden" name ="question_id" value="{{q.question_id}}">
+                            <textarea name="question" rows="4" cols="50" readonly>{{ q.question }}</textarea>
+                        </div>
+                
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="answer_{{ q.question_id }}" value="{{ q.option1 }}">
+                                <h2>{{ q.option1 }}</h2>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="answer_{{ q.question_id }}" value="{{ q.option2 }}">
+                                <h2>{{ q.option2 }}</h2>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="answer_{{ q.question_id }}" value="{{ q.option3 }}">
+                                <h2>{{ q.option3 }}</h2>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="answer_{{ q.question_id }}" value="{{ q.option4 }}">
+                                <h2>{{ q.option4 }}</h2>
+                            </label>
+                        </div>
+                    {% endfor %}
+                
+                    <div class="quiz-controls">
+                        <a href="{% url 'dashboard_student' %}"><button type="submit" class="submit-btn">Submit Answers</button></a>
+                    </div>
+                </form>                
+            </section>
+        </div>
+    </main>
+    <script>
+        function showBlurEffect() {
+            document.body.style.filter = "blur(10px)";
+            setTimeout(() => {
+                document.body.style.filter = "none";
+            }, 2000);
+        }
+
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'PrintScreen') {
+                showBlurEffect();
+            }
+        });
+
+        
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showBlurEffect();
+        });
+
+        
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey && e.key === 'p') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'p') || 
+                (e.metaKey && e.key === 'p')) { // Command + P (Mac)
+                e.preventDefault();
+                showBlurEffect();
+            }
+        });
+
+       
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || // Ctrl + Shift + I
+                (e.ctrlKey && e.shiftKey && e.key === 'J') || // Ctrl + Shift + J
+                (e.ctrlKey && e.key === 'U')) { // Ctrl + U
+                e.preventDefault();
+                showBlurEffect();
+            }
+        });
+    </script>
+    <script>
+        // Countdown Timer
+        let durationInSeconds = {{ test_du }};
+        let timerDisplay = document.querySelector('.quiz-left-top-time h2');
+    
+        function formatTime(seconds) {
+            const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+            const secs = String(seconds % 60).padStart(2, '0');
+            return `${mins}:${secs}`;
+        }
+    
+        function startCountdown(seconds) {
+            timerDisplay.textContent = formatTime(seconds);
+    
+            const countdown = setInterval(() => {
+                seconds--;
+    
+                if (seconds <= 0) {
+                    clearInterval(countdown);
+                    timerDisplay.textContent = "Time's up!";
+                    alert("Time's up! Submitting your quiz...");
+                    document.querySelector('form').submit();
+                    return;
+                }
+    
+                timerDisplay.textContent = formatTime(seconds);
+            }, 1000);
+        }
+    
+        // Start the countdown when page loads
+        window.onload = () => {
+            startCountdown(durationInSeconds);
+        };
+    </script>
+</body>
+</html>
+
+
