@@ -460,7 +460,7 @@ def file(request):
 
 def result_student(request):
     username = request.session.get('username')
-    std_info = StudentInfo.objects.get(username=username)
+    std_info = StudentInfo.objects.filter(username=username)
     results = Result.objects.filter(PRN=std_info.std_prn).order_by('-test_created_at')
     
     context = {
@@ -474,15 +474,12 @@ def SignupPage(request):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
-
-        hashed_password = make_password(password)  # 🔒 Hash the password
+        hashed_password = make_password(password) 
         student = Student.objects.create(
             username=username,
             email=email,
             password=hashed_password,
         )
-
-        # return HttpResponse("Student registered successfully!")
         return redirect('login')
 
     return render(request, 'signup.html')
@@ -497,7 +494,7 @@ def LoginPage(request):
             if check_password(password, student.password):
                 request.session['student_id'] = student.student_id
                 request.session['username'] = student.username
-                return redirect('dashboard_student')  # ✅ URL name from urls.py
+                return redirect('dashboard_student')  
             else:
                 return HttpResponse("Invalid password.")
         except Student.DoesNotExist:

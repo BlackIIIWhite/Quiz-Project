@@ -137,108 +137,120 @@
     </main>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const ctx = document.getElementById('marksChart').getContext('2d');
-    
-            const studentCount = 20;
-            const studentLabels = Array.from({ length: studentCount }, (_, i) => `Student ${i + 1}`);
-    
-            const classAMarks = Array.from({ length: studentCount }, () => Math.floor(Math.random() * 21));
-            const classBMarks = Array.from({ length: studentCount }, () => Math.floor(Math.random() * 21));
-    
-            const gradientA = ctx.createLinearGradient(0, 0, 0, 400);
-            gradientA.addColorStop(0, '#FFFFFF');
-            gradientA.addColorStop(1, '#8490FD');
-    
-            const gradientB = ctx.createLinearGradient(0, 0, 0, 400);
-            gradientB.addColorStop(0, '#FFFFFF');
-            gradientB.addColorStop(1, '#84FD92');
-    
-            const chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: studentLabels,
-                    datasets: [
-                        {
-                            label: 'Student in A',
-                            data: classAMarks,
-                            borderColor: '#069918',
-                            backgroundColor: gradientA,
-                            tension: 0.4,
-                            fill: true,
-                            borderWidth: 2
-                        },
-                        {
-                            label: 'Student in B',
-                            data: classBMarks,
-                            borderColor: '#8427fd',
-                            backgroundColor: gradientB,
-                            tension: 0.4,
-                            fill: true,
-                            borderWidth: 2
-                        }
-                    ]
+    const ctx = document.getElementById('marksChart').getContext('2d');
+
+    // Simulate data from server
+    const studentCount = 0;  // <-- 0 students to simulate no data
+    const studentLabels = Array.from({ length: studentCount }, (_, i) => `Student ${i + 1}`);
+    const classAMarks = Array.from({ length: studentCount }, () => Math.floor(Math.random() * 21));
+    const classBMarks = Array.from({ length: studentCount }, () => Math.floor(Math.random() * 21));
+
+    // Check if there's any data
+    if (studentCount === 0) {
+        document.querySelector('.chart-container').innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: center; height: 400px; font-size: 24px; color: #444;">
+                📊 Data Statistics Feature Coming Soon!
+            </div>
+        `;
+        return;
+    }
+
+    // Gradients
+    const gradientA = ctx.createLinearGradient(0, 0, 0, 400);
+    gradientA.addColorStop(0, '#FFFFFF');
+    gradientA.addColorStop(1, '#8490FD');
+
+    const gradientB = ctx.createLinearGradient(0, 0, 0, 400);
+    gradientB.addColorStop(0, '#FFFFFF');
+    gradientB.addColorStop(1, '#84FD92');
+
+    // Chart instance
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: studentLabels,
+            datasets: [
+                {
+                    label: 'Student in A',
+                    data: classAMarks,
+                    borderColor: '#069918',
+                    backgroundColor: gradientA,
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 20,
-                            title: {
-                                display: true,
-                                text: 'Marks Obtained'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Students'
-                            }
-                        }
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Student Performance Comparison',
-                            font: {
-                                size: 16
-                            }
-                        },
-                        legend: {
-                            position: 'top'
-                        }
+                {
+                    label: 'Student in B',
+                    data: classBMarks,
+                    borderColor: '#8427fd',
+                    backgroundColor: gradientB,
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 20,
+                    title: {
+                        display: true,
+                        text: 'Marks Obtained'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Students'
                     }
                 }
-            });
-    
-            // ---- Gradient Section Styling ----
-            function getRandomColor() {
-                const letters = '0123456789ABCDEF';
-                let color = '#';
-                for (let i = 0; i < 6; i++) {
-                    color += letters[Math.floor(Math.random() * 16)];
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Student Performance Comparison',
+                    font: {
+                        size: 16
+                    }
+                },
+                legend: {
+                    position: 'top'
                 }
-                return color;
             }
-    
-            function applyRandomGradients() {
-                const sections = document.querySelectorAll('.section-1');
-                sections.forEach(section => {
-                    const color1 = getRandomColor();
-                    const color2 = getRandomColor();
-                    section.style.background = `linear-gradient(90deg, ${color1} 20%, ${color2} 100%)`;
-    
-                    section.addEventListener('click', () => {
-                        const newColor1 = getRandomColor();
-                        const newColor2 = getRandomColor();
-                        section.style.background = `linear-gradient(90deg, ${newColor1} 20%, ${newColor2} 100%)`;
-                    });
-                });
-            }
-    
-            applyRandomGradients(); // Call this once DOM is loaded
+        }
+    });
+
+    // ---- Gradient Section Styling ----
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    function applyRandomGradients() {
+        const sections = document.querySelectorAll('.section-1');
+        sections.forEach(section => {
+            const color1 = getRandomColor();
+            const color2 = getRandomColor();
+            section.style.background = `linear-gradient(90deg, ${color1} 20%, ${color2} 100%)`;
+
+            section.addEventListener('click', () => {
+                const newColor1 = getRandomColor();
+                const newColor2 = getRandomColor();
+                section.style.background = `linear-gradient(90deg, ${newColor1} 20%, ${newColor2} 100%)`;
+            });
         });
+    }
+
+    applyRandomGradients(); // Call this once DOM is loaded
+});
     </script>
     
 </body>
