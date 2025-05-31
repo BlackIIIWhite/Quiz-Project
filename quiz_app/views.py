@@ -105,8 +105,11 @@ def quiz_an(request):
 
 
 def dashboard_st(request):
+
+    username = request.session.get('username')
     if not request.session.get('teacher_id'):
         return redirect('login_teach')
+    
 
     teacher = Teacher.objects.get(teacher_id=request.session['teacher_id'])  
 
@@ -118,24 +121,21 @@ def dashboard_st(request):
     number = range(teacher_info.no_section)
     name = teacher_info.name_teacher
 
-    classes = CreateClass.objects.filter(teacher_id=teacher_info)
-    
-    teacher = TeacherInfo.objects.get(teacher_id=4)
-    number = range(teacher.no_section)
-    name = teacher.name_teacher
-
-    # Get ALL classes for this teacher
+    classes = CreateClass.objects.filter(teacher_id=teacher_info.teacher_id)
 
     # Prepare lists of data
     sections = [cls.section for cls in classes]
     subjects = [cls.subject for cls in classes]
 
+    class_data = [{'section': cls.section, 'subject': cls.subject} for cls in classes]
+
     return render(request, 'dashboard_st.html', {
         'number': number,
-        'sections': sections,
-        'subjects': subjects,
-        'name': name
-    })
+        'class_data': class_data,
+        'name': name,
+        'username': teacher.username
+})
+
 
 def dashboard_student(request):
     if not request.session.get('student_id'):
@@ -173,8 +173,11 @@ def result(request):
     username = request.session.get('username')
     subject_names = CreateClass.objects.filter(user_name=username).values_list('subject', flat=True)
     results = Result.objects.filter(subject_name__in=subject_names).order_by('-test_created_at')
-    
-    return render(request, 'result.html', {'results': results})
+    context ={
+        'results': results,
+        'username': username
+    }
+    return render(request, 'result.html', context)
 
 def test_info(request):
     test_code = generate_test_code()
@@ -261,8 +264,8 @@ def quiz_create(request):
         return redirect('dashboard_st')
 
 def create_class(request):
+    class_code = generate_test_code()
     if request.method == 'POST':
-        class_code = generate_test_code()
         username = request.session.get('username')
         if not username:
             return HttpResponse("Session expired or user not logged in.", status=401)
@@ -294,7 +297,6 @@ def create_class(request):
         return redirect('dashboard_st')
 
     else:
-        class_code = generate_test_code()
         return render(request, "create_class.html", {'class_code': class_code})
 
 
@@ -303,8 +305,8 @@ def upload(request):
     return render(request,"upload.html")
 
 def join_class(request):
+    username = request.session.get('username')
     if request.method == 'POST': 
-        username = request.session.get('username')
         student_name = request.POST.get('Nofs')
         std_prn = request.POST.get('PRN')
         std_sec = request.POST.get('section_cla')
@@ -350,10 +352,11 @@ def join_class(request):
             'name_subject': name_subject
         })
 
-    return render(request, 'join_class.html')
+    return render(request, 'join_class.html',{'username': username})
 
 
 def join_test(request):
+    username = request.session.get('username')
     if request.method == 'POST': 
         code = request.POST.get('test_code')
 
@@ -378,7 +381,7 @@ def join_test(request):
             'code': code
         })
 
-    return render(request, 'join_test.html')
+    return render(request, 'join_test.html',{'username': username})
 
 
 def file(request):
@@ -460,11 +463,12 @@ def file(request):
 
 def result_student(request):
     username = request.session.get('username')
-    std_info = StudentInfo.objects.filter(username=username)
+    std_info = StudentInfo.objects.get(username=username)
     results = Result.objects.filter(PRN=std_info.std_prn).order_by('-test_created_at')
     
     context = {
-        'results': results
+        'results': results,
+        'username':username
     }
     return render(request, 'result_student.html', context)
 
@@ -474,12 +478,15 @@ def SignupPage(request):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
-        hashed_password = make_password(password) 
+
+        hashed_password = make_password(password)  # 🔒 Hash the password
         student = Student.objects.create(
             username=username,
             email=email,
             password=hashed_password,
         )
+
+        # return HttpResponse("Student registered successfully!")
         return redirect('login')
 
     return render(request, 'signup.html')

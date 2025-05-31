@@ -75,6 +75,11 @@ a{
     gap: 50px;
     overflow: hidden;
 }
+.chart-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .sub-section-name {
     display: flex;
     flex-direction: row;
@@ -118,7 +123,6 @@ a{
 
 .info-icon{
     width: 23%;
-    height: 10vh;
     background-color: rgba(255, 255, 255, 0.384);
     border-radius: 50%;
     box-shadow: -5px -1px 56px -46px rgba(0,0,0,0.75);
@@ -216,12 +220,13 @@ a{
 .section-1 {
     flex: 0 0 auto;
     scroll-snap-align: start;
-    min-width: 200px; /* or however wide you want each card */
+    min-width: 250px; /* or however wide you want each card */
     background-color: #f9f9f9;
     border-radius: 12px;
     padding: 1rem;
     box-shadow: 0 0 8px rgba(0,0,0,0.1);
     transition: transform 0.3s;
+    height: 75px;
 }
 
 .section-1:hover {
@@ -340,7 +345,7 @@ a{
     }
 
     .info-icon {
-        width: 22%;
+        width: 18%;
         height: 8vh;
     }
 

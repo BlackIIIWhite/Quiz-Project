@@ -16,8 +16,8 @@
         <div class="signup-section">
             <h2>Signup</h2>
              <div class ="btn_2_1">
-                <a href="{% url 'login' %}"><button type="button" class="role-btn">Student</button></a>
-                <a href="{% url 'login_teach' %}"><button type="button" class="role-btn" style ="background-color: #000000;">Teacher</button></a>
+                <a href="{% url 'signup' %}"><button type="button" class="role-btn">Student</button></a>
+                <a href="{% url 'signup_teach' %}"><button type="button" class="role-btn" style ="background-color: #000000;">Teacher</button></a>
             </div>
             <form action="{% url 'signup_teach' %}" method="POST">
                 {% csrf_token %}

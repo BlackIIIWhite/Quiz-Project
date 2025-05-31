@@ -17,7 +17,7 @@
                         <img src="{% static 'source/admin-users.png' %}" alt="Quiz Time Logo">
                     </div>
                     <div class="name">
-                        <h4>{{ student.username }}</h4>
+                        <h4>{{ username }}</h4>
                     </div>
                 </div>
                 <div class="home">
@@ -42,7 +42,7 @@
                     <img src="{% static 'source/logout.png' %}" alt="Quiz Time Logo">
                 </div>
                 <div class="name">
-                    <a href="#"><h4>Logout</h4></a>
+                    <a href="{% url 'logout' %}"><a href="#"><h4>Logout</h4></a>
                 </div>
             </div>
         </nav>
@@ -83,7 +83,8 @@
                 </div>
                 <div class="section-content-right">
                     <div class="chart-container">
-                        <canvas id="marksChart"></canvas>
+                        <h1>📊 Statistics Data Feature Coming Soon</h1>
+                        {% comment %} <canvas id="marksChart"></canvas> {% endcomment %}
                     </div>
                 </div>
                 <div class="section-content-bottom">
