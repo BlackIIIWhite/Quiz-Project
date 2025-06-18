@@ -1,4 +1,4 @@
-staticfiles/
-.env
-.venv
-.Procfile
+
+env/
+venv/
+Procfile/
