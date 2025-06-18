@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Quiz, Test, CreateClass ,TeacherInfo, StudentInfo, JoinClass ,Test_quiz,Result,Student,Teacher # Make sure models are correctly named
+from .models import Quiz, Test, CreateClass ,TeacherInfo, StudentInfo, JoinClass ,Test_quiz,Result,Student,Teacher,valid # Make sure models are correctly named
 
 class QuizAdmin(admin.ModelAdmin):
     list_display = ( 'question_id',
@@ -19,7 +19,7 @@ admin.site.register(Quiz, QuizAdmin)
 
 
 class TestAdmin(admin.ModelAdmin):  
-    list_display = ('test_id', 'test_name','test_code','number_of_questions','test_duration', 'test_created_at', 'test_updated_at')
+    list_display = ('test_id', 'test_name','test_code','teacher_username','subject_name','number_of_questions','test_duration', 'test_created_at', 'test_updated_at')
     search_fields = ('test_name',)
     list_filter = ('test_created_at', 'test_updated_at')
     list_per_page = 10
@@ -94,3 +94,11 @@ class TeacherAdmin(admin.ModelAdmin):
     list_display = ('username', 'email') 
 
 admin.site.register(Teacher, TeacherAdmin)   
+
+class ValidAdmin(admin.ModelAdmin):
+    list_display = ('username', 'PRN','valid','code', 'test_created_at', 'test_updated_at')
+    search_fields = ('username','PRN',)
+    list_filter = ('test_created_at', 'test_updated_at')
+    ordering = ('-test_created_at',)
+    
+admin.site.register(valid, ValidAdmin)

@@ -17,7 +17,7 @@
                     <img src="{% static 'source/hugeicons_quiz-01.png' %}" alt="Quiz Time Logo">
                 </div>
                 <div class="username">
-                    <h4>User Name</h4>
+                    <h4>{{username}}</h4>
                 </div>
             </div>
         </nav>
@@ -43,6 +43,15 @@
                         <label for="Test_time" style="font-size: 20px; font-weight: bold; color: #333;"><h4>Test Time(in minutes)</h4></label>
                         <input type="number" name="test_time" id="test_time" class="test_info" placeholder="Test Time">
                         </label>
+                        <br>
+                            <label for="class_option" style="font-size: 20px; font-weight: bold; color: #333;"><h4>Choose a Class</h4></label>
+                                <select name="class_option" id="class_option" class="test_info" required>
+                                    <option value="">Select a class</option>
+                                    {% for subject in class_list %}
+                                        <option value="{{ subject.subject }}">{{ subject.subject }}</option>
+                                    {% endfor %}
+                                </select>
+                        <br>
                         <br>
                         <div class="btn-next">
                             <input type='file' id = 'real-btn' accept="text/plain" name = 'file' hidden = 'hidden'>

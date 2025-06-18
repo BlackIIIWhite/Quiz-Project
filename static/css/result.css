@@ -28,6 +28,18 @@ nav {
     justify-content: space-between;
     align-items: center;
 }
+.export-btn .btn {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 18px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.export-btn .btn:hover {
+    background-color: #45a049;
+}
 
 .username,
 .home,

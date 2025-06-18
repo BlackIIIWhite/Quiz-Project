@@ -32,7 +32,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://quiz-app-v6-3.onrender.com'
+     'https://*.onrender.com'
 ]
 # Application definition
 

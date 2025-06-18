@@ -25,12 +25,11 @@
                     <img src="{% static 'source/hugeicons_quiz-01.png' %}" alt="Quiz Time Logo">
                 </div>
                 <div class="username">
-                    <h4>User Name</h4>
+                    <h4>{{username}}</h4>
                 </div>
             </div>
         </nav>
     </header>
-
     <main>
         <div class="quiz-container">
             <section class="quiz-middle">
@@ -42,6 +41,8 @@
                         <h2>{{ test_du }}</h2>
                     </div>
                 </section>
+                    <video id="videoElement" autoplay playsinline></video>
+                    <img id="resultImage" hidden ='hidden'>
                 <form action="{% url 'quiz_an' %}" method="post">
                     {% csrf_token %}
                     {% comment %} <p style="color: red;">Test ID: {{ test_id }}</p> {% endcomment %}
@@ -73,7 +74,6 @@
                             </label>
                         </div>
                     {% endfor %}
-                
                     <div class="quiz-controls">
                         <a href="{% url 'dashboard_student' %}"><button type="submit" class="submit-btn">Submit Answers</button></a>
                     </div>
@@ -156,6 +156,66 @@
             startCountdown(durationInSeconds);
         };
     </script>
+<script>
+    const video = document.getElementById("videoElement");
+    const testCode = document.querySelector('input[name="code"]').value;
+    let detectionActive = true;
+
+    navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+        video.srcObject = stream;
+
+    // Wait until video metadata is loaded (video size available)
+        video.addEventListener('loadedmetadata', () => {
+            if (video.videoWidth && video.videoHeight) {
+                console.log("Video dimensions:", video.videoWidth, video.videoHeight);
+                sendFrame();  // start detection only when dimensions are ready
+            } else {
+                console.error("Video stream has no size!");
+            }
+        });
+
+    }).catch(err => {
+        console.error("Webcam access error:", err);
+    });
+
+    function sendFrame() {
+        if (!detectionActive) return;
+
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        const imageData = canvas.toDataURL('image/jpeg');
+
+        fetch('/object_detect/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                image: imageData,
+                code: testCode
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                console.error("Server returned an error status.");
+                return response.json().then(err => console.error(err));
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.redirect) {
+                detectionActive = false;
+                window.location.href = data.url;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
+        setTimeout(sendFrame, 1500); // safer interval for deployment (1.5 sec)
+    }
+
+</script>
 </body>
 </html>
 

@@ -41,4 +41,7 @@ urlpatterns = [
     path('signup_teach/', views.SignupPage_teacher, name='signup_teach'),
     path('logout/', views.LogoutPage, name='logout'),
     path('logout_teach/', views.LogoutPage_teacher, name='logout_teach'),
+    path('detect/', views.object_detect, name='object_detect'),
+    path('object_detect/', views.object_detect, name='object_detect'),
+    path('export-results/', views.export_results, name='export_results'),
 ]

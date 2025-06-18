@@ -5,11 +5,13 @@ from django.utils import timezone
 class Test(models.Model):
     test_id = models.AutoField(primary_key=True)
     test_name = models.CharField(max_length=255)
+    teacher_username = models.CharField(max_length=255,default=0)
+    subject_name = models.CharField(max_length=255,default=0)
     test_created_at = models.DateTimeField(auto_now_add=True)
     test_updated_at = models.DateTimeField(auto_now=True)
     number_of_questions = models.IntegerField(default=0)
     test_duration = models.DurationField(default=timedelta(minutes=30))
-    test_code= models.CharField(max_length=255, default='TES5TA56BX')
+    test_code = models.CharField(max_length=255)
     
 
     def __str__(self):
@@ -115,6 +117,7 @@ class Test_quiz (models.Model):
 
 class Result(models.Model):
     std_name = models .CharField(max_length = 225,default=0)
+    teach_username=models.CharField(max_length= 255,default=0)
     user_name = models .CharField(max_length = 225,default=0)
     std_section = models .CharField(max_length = 225,default=0)
     subject_name =models .CharField(max_length = 225,default=0)
@@ -141,7 +144,17 @@ class Teacher(models.Model):
     def __str__(self):
         return self.username  
     
+class valid(models.Model):   
+    username = models.CharField(max_length=255)
+    sub_name = models.CharField(max_length=255)
+    PRN =models.CharField(max_length=225,default=0)
+    valid = models.IntegerField(default=0)
+    test_created_at = models.DateTimeField(auto_now_add=True)
+    test_updated_at = models.DateTimeField(auto_now=True)
+    code =models.CharField(max_length=255,default=0)
     
+    def __str__(self):
+        return self.username
     
 
     

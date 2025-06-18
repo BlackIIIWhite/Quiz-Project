@@ -17,7 +17,7 @@
                     <img src="{% static 'source/hugeicons_quiz-01.png' %}" alt="Quiz Time Logo">
                 </div>
                 <div class="username">
-                    <h4>User Name</h4>
+                    <h4>{{username}}</h4>
                 </div>
             </div>
         </nav>
@@ -46,7 +46,7 @@
                         <br>
                         <label class="quiz-option">
                         <label for="Test_time" style="font-size: 20px; font-weight: bold; color: #333;"><h4>Class Code</h4></label>
-                        <input type="text" name="Class_code" id="test_code" class="test_info" value="{{class_code}}" readonly required>
+                        <input type="text" name="class_code" id="test_code" class="test_info" value="{{class_code}}" readonly required>
                         <img src="{% static 'source/copy.png' %}" alt="Copy" class="copy_icon"onclick="copy_test_code()">
                         </label>
                     </div>
